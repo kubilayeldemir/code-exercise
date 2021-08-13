@@ -1,4 +1,5 @@
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,8 +8,8 @@ public class Alien {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-
-    private String name;
+    @Embedded
+    private AlienName name;
     private String color;
 
     public Long getId() {
@@ -20,11 +21,11 @@ public class Alien {
     }
 
 
-    public String getName() {
+    public AlienName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(AlienName name) {
         this.name = name;
     }
 
@@ -34,5 +35,14 @@ public class Alien {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Alien{" +
+                "id=" + id +
+                ", name=" + name +
+                ", color='" + color + '\'' +
+                '}';
     }
 }
