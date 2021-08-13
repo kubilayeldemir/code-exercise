@@ -16,14 +16,29 @@ public class AlienHelper {
 
         Session session = sf.openSession();
 
-        Alien ali = new Alien();
+        Alien alien = new Alien();
 
-        ali.setColor(color);
-        ali.setId(id);
-        ali.setName(name);
+        alien.setColor(color);
+        alien.setId(id);
+        alien.setName(name);
 
         Transaction tx = session.beginTransaction();
-        session.save(ali);
+        session.save(alien);
         tx.commit();
+    }
+    public static Alien getAlien(Long id){
+        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
+
+        ServiceRegistry reg  = new ServiceRegistryBuilder().
+                applySettings(configuration.getProperties()).buildServiceRegistry();
+
+        SessionFactory sf = configuration.buildSessionFactory(reg);
+
+        Session session = sf.openSession();
+
+        Alien alien;
+        //Stackoverflow: Without transaction you can only retrieve object from database
+        alien = (Alien) session.get(Alien.class,id);
+        return alien;
     }
 }
