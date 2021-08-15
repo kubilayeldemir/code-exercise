@@ -1,40 +1,42 @@
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Alien {
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long alienId;
     @Embedded
     private AlienName name;
     private String color;
-    @OneToOne
-    private AlienWeapon weapon;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "alien")
+    private List<AlienWeapon> weapons = new ArrayList<>();
 
     public Alien() {
 
     }
 
     public Alien(Long id, AlienName name, String color) {
-        this.id = id;
+        this.alienId = id;
         this.name = name;
         this.color = color;
     }
 
-    public AlienWeapon getWeapon() {
-        return weapon;
+    public List<AlienWeapon> getWeapons() {
+        return weapons;
     }
 
-    public void setWeapon(AlienWeapon weapon) {
-        this.weapon = weapon;
-    }
-    public Long getId() {
-        return id;
+    public void setWeapons(List<AlienWeapon> weapons) {
+        this.weapons = weapons;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getAlienId() {
+        return alienId;
+    }
+
+    public void setAlienId(Long alienId) {
+        this.alienId = alienId;
     }
 
 
@@ -57,7 +59,7 @@ public class Alien {
     @Override
     public String toString() {
         return "Alien{" +
-                "id=" + id +
+                "id=" + alienId +
                 ", name=" + name +
                 ", color='" + color + '\'' +
                 '}';

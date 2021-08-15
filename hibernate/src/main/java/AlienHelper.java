@@ -6,27 +6,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 public class AlienHelper {
-    public static void saveAlien(Long id, AlienName name, String color){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
-
-        ServiceRegistry reg  = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
-        Session session = sf.openSession();
-
-        Alien alien = new Alien();
-
-        alien.setColor(color);
-        alien.setId(id);
-        alien.setName(name);
-
-        Transaction tx = session.beginTransaction();
-        session.save(alien);
-        tx.commit();
-    }
-    public static void saveAlienAndWeapon(Alien alien,AlienWeapon weapon){
+    public static void saveAlien(Alien alien){
         Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class);
 
         ServiceRegistry reg  = new ServiceRegistryBuilder().
@@ -35,13 +15,11 @@ public class AlienHelper {
         SessionFactory sf = configuration.buildSessionFactory(reg);
 
         Session session = sf.openSession();
-        Transaction tx = session.beginTransaction();
 
-        session.save(weapon);
+        Transaction tx = session.beginTransaction();
         session.save(alien);
         tx.commit();
     }
-
     public static Alien getAlien(Long id){
         Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
 

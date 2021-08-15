@@ -1,21 +1,37 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class AlienWeapon {
     @Id
-    private Long id;
+    private Long weaponId;
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "alien_id")
+    private Alien alien;
 
+    public AlienWeapon() {
+    }
+
+    public AlienWeapon(Long weaponId, String name, Alien alien) {
+        this.weaponId = weaponId;
+        this.name = name;
+        this.alien = alien;
+    }
+
+    public Alien getAlien() {
+        return alien;
+    }
+
+    public void setAlien(Alien alien) {
+        this.alien = alien;
+    }
 
     public Long getId() {
-        return id;
+        return weaponId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.weaponId = id;
     }
 
     public String getName() {

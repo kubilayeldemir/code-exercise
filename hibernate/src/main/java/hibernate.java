@@ -1,9 +1,5 @@
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class hibernate {
     static public void main(String[] args) {
@@ -12,11 +8,15 @@ public class hibernate {
 //        System.out.println(alien.toString());
 
         var myAlien = new Alien(23L,new AlienName("Kubilay","Kubi","Eldemir"),"Blue");
-        var weapon = new AlienWeapon();
-        weapon.setName("Destroyer");
-        weapon.setId(2L);
-        myAlien.setWeapon(weapon);
+        List<AlienWeapon> weaponList = new ArrayList<>();
 
-        AlienHelper.saveAlienAndWeapon(myAlien,weapon);
+        weaponList.add(new AlienWeapon(2L,"KDP",myAlien));
+        weaponList.add(new AlienWeapon(3L,"Full Moon",myAlien));
+
+
+        myAlien.setWeapons(weaponList);
+
+        AlienHelper.saveAlien(myAlien);
+
     }
 }
