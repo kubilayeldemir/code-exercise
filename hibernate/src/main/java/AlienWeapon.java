@@ -5,8 +5,7 @@ public class AlienWeapon {
     @Id
     private Long weaponId;
     private String name;
-    @ManyToOne
-    private Alien alien;
+
 
     public AlienWeapon() {
     }
@@ -16,13 +15,6 @@ public class AlienWeapon {
         this.name = name;
     }
 
-    public Alien getAlien() {
-        return alien;
-    }
-
-    public void setAlien(Alien alien) {
-        this.alien = alien;
-    }
 
     public Long getId() {
         return weaponId;
