@@ -59,9 +59,10 @@ public class Alien {
     @Override
     public String toString() {
         return "Alien{" +
-                "id=" + alienId +
+                "alienId=" + alienId +
                 ", name=" + name +
                 ", color='" + color + '\'' +
+                ", weapons=" + weapons +
                 '}';
     }
 }

@@ -21,7 +21,7 @@ public class AlienHelper {
         tx.commit();
     }
     public static Alien getAlien(Long id){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
+        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class);
 
         ServiceRegistry reg  = new ServiceRegistryBuilder().
                 applySettings(configuration.getProperties()).buildServiceRegistry();

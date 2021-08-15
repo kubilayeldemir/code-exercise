@@ -41,4 +41,12 @@ public class AlienWeapon {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "AlienWeapon{" +
+                "weaponId=" + weaponId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

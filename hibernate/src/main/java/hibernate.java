@@ -7,7 +7,7 @@ public class hibernate {
 //        var alien = AlienHelper.getAlien(3L);
 //        System.out.println(alien.toString());
 
-        var myAlien = new Alien(23L,new AlienName("Kubilay","Kubi","Eldemir"),"Blue");
+        var myAlien = new Alien(25L,new AlienName("Kubilay","Kubi","Eldemir"),"Blue");
         List<AlienWeapon> weaponList = new ArrayList<>();
 
         weaponList.add(new AlienWeapon(2L,"KDP",myAlien));
@@ -16,7 +16,9 @@ public class hibernate {
 
         myAlien.setWeapons(weaponList);
 
-        AlienHelper.saveAlien(myAlien);
+        //AlienHelper.saveAlien(myAlien);
 
+        var alien = AlienHelper.getAlien(25L);
+        System.out.println(alien.toString());
     }
 }
