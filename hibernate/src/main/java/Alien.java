@@ -10,7 +10,8 @@ public class Alien {
     @Embedded
     private AlienName name;
     private String color;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "alien")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn( name = "alien_id", referencedColumnName = "id")
     private List<AlienWeapon> weapons = new ArrayList<>();
 
     public Alien() {
