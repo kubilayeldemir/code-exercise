@@ -8,7 +8,15 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class hibernate {
     static public void main(String[] args) {
 //        AlienHelper.saveAlien(1L,new AlienName("Kubilay","Kubi","Eldemir"),"Blue");
-        var alien = AlienHelper.getAlien(3L);
-        System.out.println(alien.toString());
+//        var alien = AlienHelper.getAlien(3L);
+//        System.out.println(alien.toString());
+
+        var myAlien = new Alien(23L,new AlienName("Kubilay","Kubi","Eldemir"),"Blue");
+        var weapon = new AlienWeapon();
+        weapon.setName("Destroyer");
+        weapon.setId(2L);
+        myAlien.setWeapon(weapon);
+
+        AlienHelper.saveAlienAndWeapon(myAlien,weapon);
     }
 }

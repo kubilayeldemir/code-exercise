@@ -26,6 +26,22 @@ public class AlienHelper {
         session.save(alien);
         tx.commit();
     }
+    public static void saveAlienAndWeapon(Alien alien,AlienWeapon weapon){
+        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class);
+
+        ServiceRegistry reg  = new ServiceRegistryBuilder().
+                applySettings(configuration.getProperties()).buildServiceRegistry();
+
+        SessionFactory sf = configuration.buildSessionFactory(reg);
+
+        Session session = sf.openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.save(weapon);
+        session.save(alien);
+        tx.commit();
+    }
+
     public static Alien getAlien(Long id){
         Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
 
