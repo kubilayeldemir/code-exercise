@@ -19,7 +19,7 @@ public class AlienHelper {
         Alien alien = new Alien();
 
         alien.setColor(color);
-        alien.setId(id);
+        //alien.setId(id);
         alien.setName(name);
 
         Transaction tx = session.beginTransaction();
