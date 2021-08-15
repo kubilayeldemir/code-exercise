@@ -12,10 +12,9 @@ public class AlienWeapon {
     public AlienWeapon() {
     }
 
-    public AlienWeapon(Long weaponId, String name, Alien alien) {
+    public AlienWeapon(Long weaponId, String name) {
         this.weaponId = weaponId;
         this.name = name;
-        this.alien = alien;
     }
 
     public Alien getAlien() {

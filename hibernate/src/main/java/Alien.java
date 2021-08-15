@@ -23,12 +23,24 @@ public class Alien {
         this.color = color;
     }
 
+    public void addWeapon(AlienWeapon weapon){
+        weapons.add(weapon);
+        weapon.setAlien(this);
+    }
+
+    public void removeWeapon(AlienWeapon weapon){
+        weapons.remove(weapon);
+        weapon.setAlien(null);
+    }
+
     public List<AlienWeapon> getWeapons() {
         return weapons;
     }
 
     public void setWeapons(List<AlienWeapon> weapons) {
-        this.weapons = weapons;
+        for (AlienWeapon weapon : weapons){
+            addWeapon(weapon);
+        }
     }
 
     public Long getAlienId() {
