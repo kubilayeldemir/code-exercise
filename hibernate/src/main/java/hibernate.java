@@ -19,7 +19,7 @@ public class hibernate {
         //AlienHelper.saveAlien(myAlien);
 
         var alien = AlienHelper.getAlien(25L);
-        //System.out.println(alien.toString());
+        System.out.println(alien.toString());
 
         AlienTitle alienTitle = new AlienTitle();
         alienTitle.setId(1L);

@@ -2,19 +2,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+
 import java.util.List;
 
 public class AlienHelper {
-    public static void saveAlien(Alien alien){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class).addAnnotatedClass(AlienTitle.class);
-
-        ServiceRegistry reg  = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
+    public static void saveAlien(Alien alien) {
+        SessionFactory sf = PersistentService.getSessionFactory();
         Session session = sf.openSession();
 
         Transaction tx = session.beginTransaction();
@@ -22,58 +15,38 @@ public class AlienHelper {
         tx.commit();
     }
 
-    public static void saveWeapon(AlienWeapon weapon){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class);
-
-        ServiceRegistry reg  = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
+    public static void saveWeapon(AlienWeapon weapon) {
+        SessionFactory sf = PersistentService.getSessionFactory();
         Session session = sf.openSession();
 
         Transaction tx = session.beginTransaction();
         session.save(weapon);
         tx.commit();
     }
-    public static void saveAlienTitle(AlienTitle alienTitle){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class).addAnnotatedClass(AlienTitle.class);
 
-        ServiceRegistry reg  = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
+    public static void saveAlienTitle(AlienTitle alienTitle) {
+        SessionFactory sf = PersistentService.getSessionFactory();
         Session session = sf.openSession();
 
         Transaction tx = session.beginTransaction();
         session.save(alienTitle);
         tx.commit();
     }
-    public static Alien getAlien(Long id){
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class);
 
-        ServiceRegistry reg  = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
+    public static Alien getAlien(Long id) {
+        SessionFactory sf = PersistentService.getSessionFactory();
         Session session = sf.openSession();
 
         Alien alien;
         //Stackoverflow: Without transaction you can only retrieve object from database
-        alien = (Alien) session.get(Alien.class,id);
+        alien = session.get(Alien.class, id);
         return alien;
     }
+
     public static List<AlienTitle> getTitles(Long alienId) {
-        Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class).addAnnotatedClass(AlienWeapon.class).addAnnotatedClass(AlienTitle.class);
-
-        ServiceRegistry reg = new ServiceRegistryBuilder().
-                applySettings(configuration.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = configuration.buildSessionFactory(reg);
-
+        SessionFactory sf = PersistentService.getSessionFactory();
         Session session = sf.openSession();
+
         String query = "select ali " +
                 " from AlienTitle ali" +
                 " where ali.alien.id = :alienId";

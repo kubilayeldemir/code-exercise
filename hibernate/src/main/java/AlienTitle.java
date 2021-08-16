@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -26,6 +28,7 @@ public class AlienTitle {
         this.title = title;
     }
 
+    @JsonIgnore
     public Alien getAlien() {
         return alien;
     }
@@ -39,7 +42,6 @@ public class AlienTitle {
         return "AlienTitle{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", alien=" + alien +
                 '}';
     }
 }
