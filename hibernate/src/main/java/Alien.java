@@ -10,7 +10,7 @@ public class Alien {
     @Embedded
     private AlienName name;
     private String color;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "alien")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alien")
     private List<AlienWeapon> weapons = new ArrayList<>();
 
     public Alien() {
@@ -23,12 +23,12 @@ public class Alien {
         this.color = color;
     }
 
-    public void addWeapon(AlienWeapon weapon){
+    public void addWeapon(AlienWeapon weapon) {
         weapons.add(weapon);
         weapon.setAlien(this);
     }
 
-    public void removeWeapon(AlienWeapon weapon){
+    public void removeWeapon(AlienWeapon weapon) {
         weapons.remove(weapon);
         weapon.setAlien(null);
     }
@@ -38,7 +38,7 @@ public class Alien {
     }
 
     public void setWeapons(List<AlienWeapon> weapons) {
-        for (AlienWeapon weapon : weapons){
+        for (AlienWeapon weapon : weapons) {
             addWeapon(weapon);
         }
     }

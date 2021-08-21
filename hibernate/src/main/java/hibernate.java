@@ -20,6 +20,7 @@ public class hibernate {
 
         var alien = AlienHelper.getAlien(25L);
         System.out.println(alien.toString());
+        alien.setName(new AlienName("Selami","Kelaynak","Eldemir"));
 
         AlienTitle alienTitle = new AlienTitle();
         alienTitle.setId(1L);
@@ -30,6 +31,8 @@ public class hibernate {
 
         var aliTitle = AlienHelper.getTitles(25L);
         System.out.println(aliTitle.toString());
+        System.out.println("-----------Get Alien weapon number with native sql----------");
+        System.out.println(AlienHelper.getAlienWeaponNumber(25L));
 
     }
 }
