@@ -1,0 +1,15 @@
+FROM openjdk:11
+ADD target/product-category.jar product-category.jar
+EXPOSE 8085
+ENTRYPOINT ["java","-jar","product-category.jar"]
+
+sudo docker images
+
+
+sudo docker build -f Dockerfile -t prod-catalog-container .
+
+sudo docker run -p 8085:8080 prod-catalog-container
+
+sudo docker container ls
+
+sudo systemctl status docker
