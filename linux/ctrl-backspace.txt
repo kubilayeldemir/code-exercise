@@ -1,0 +1,3 @@
+stty werase \^H
+
+#delete words with CTRL+Backspace

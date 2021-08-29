@@ -1,15 +1,32 @@
-FROM openjdk:11
-ADD target/product-category.jar product-category.jar
-EXPOSE 8085
-ENTRYPOINT ["java","-jar","product-category.jar"]
+sudo systemctl status docker
 
 sudo docker images
 
+sudo docker container ls
 
-sudo docker build -f Dockerfile -t prod-catalog-container .
+#to show all containers including stopped ones
+sudo docker container ls -a
+
+#Delete image
+sudo docker image rm <id>
+
+#delete container
+sudo docker rm <id>
+
+
+sudo docker build -f Dockerfile -t <image-name> .
 
 sudo docker run -p 8085:8080 prod-catalog-container
 
-sudo docker container ls
+--rm: Delete container when stopped.(Clean up)
+-d : detached
+-t              : Allocate a pseudo-tty
+-i              : Keep STDIN open even if not attached
 
-sudo systemctl status docker
+
+sudo docker build --build-arg mongodb_url="<arg variable>" -t <image name>  .
+
+#build all services
+sudo docker-compose up -d
+sudo docker-compose down 
+sudo docker-compose start|stop
