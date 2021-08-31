@@ -1,0 +1,3 @@
+sudo apt-get install openssh-client
+
+sudo ssh <username>@<server-ip>

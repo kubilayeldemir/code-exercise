@@ -30,3 +30,20 @@ sudo docker build --build-arg mongodb_url="<arg variable>" -t <image name>  .
 sudo docker-compose up -d
 sudo docker-compose down 
 sudo docker-compose start|stop
+
+#open selected container's bash
+docker exec -it <mycontainer> bash
+
+
+curl get request for ecommerce-microservices repo:
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://hostname/resource
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8086/api/basket/960f2c61-0b2f-4df7-ae72-df7f2cae50b9
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8085/api/products?page=0&size=55
+
+curl -X POST "http://localhost:8075/api/order" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"owner\": { \"address\": \"string\", \"email\": \"string\", \"name\": \"string\", \"phoneNumber\": \"string\" }, \"productList\": [ { \"brand\": \"string\", \"category\": \"string\", \"description\": \"string\", \"discountedPrice\": 0, \"images\": \"string\", \"name\": \"string\", \"productId\": \"string\", \"retailPrice\": 0, \"stock\": 0, \"unique_id\": \"string\", \"url\": \"string\" } ]}"
+
+curl -X GET "http://localhost:8075/api/order/<order-id>" -H "accept: */*"
+
+
+
+
