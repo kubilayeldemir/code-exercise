@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/google/uuid"
 	"io/ioutil"
 	"net/http"
 	"sync"
@@ -41,7 +42,9 @@ func (b *bookHandlers) get(w http.ResponseWriter, r *http.Request) {
 	jsonBytes, err := json.Marshal(books)
 
 	if err != nil {
-		//TODO
+		w.Header().Add("content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 	}
 	w.Header().Add("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -67,28 +70,36 @@ func (b *bookHandlers) post(w http.ResponseWriter, r *http.Request) {
 	var newBook = Book{}
 	err := json.Unmarshal(bodyBytes, &newBook)
 	if err != nil {
-		panic("Error")
+		w.Header().Add("content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 	}
-	b.library[newBook.Name] = newBook
+	newBook.Id = uuid.NewString()
+	b.library[newBook.Id] = newBook
 	b.Unlock()
-
 	w.Header().Add("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	allBooks := b.getAllBooks()
 	jsonBytes, _ := json.Marshal(allBooks)
 	w.Write(jsonBytes)
+
 }
 
 func newBookHandler() *bookHandlers {
+	defaultBookIdFirst := uuid.NewString()
+	defaultBookIdSecond := uuid.NewString()
+
 	return &bookHandlers{
 		library: map[string]Book{
-			"id1": {
+			defaultBookIdFirst: {
+				Id:     defaultBookIdFirst,
 				Name:   "Foo Book",
 				Author: "Mr. Foo",
 				Pages:  33,
 				Price:  10.2,
 			},
-			"id2": {
+			defaultBookIdSecond: {
+				Id:     defaultBookIdSecond,
 				Name:   "qweqwe",
 				Author: "asdasd",
 				Pages:  123,
@@ -99,6 +110,7 @@ func newBookHandler() *bookHandlers {
 }
 
 type Book struct {
+	Id     string
 	Name   string
 	Author string
 	Pages  int
