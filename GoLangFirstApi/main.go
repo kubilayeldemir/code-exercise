@@ -6,12 +6,14 @@ import (
 	"github.com/google/uuid"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"sync"
 )
 
 func main() {
 	bookHandlers := newBookHandler()
 	http.HandleFunc("/books", bookHandlers.books)
+	http.HandleFunc("/books/", bookHandlers.getById)
 
 	port := ":8080"
 	fmt.Println("Started listening on port", port)
@@ -45,6 +47,36 @@ func (b *bookHandlers) get(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("content-type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
+		return
+	}
+	w.Header().Add("content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonBytes)
+}
+
+func (b *bookHandlers) getById(w http.ResponseWriter, r *http.Request) {
+	parts := strings.Split(r.URL.String(), "/")
+	if len(parts) != 3 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	id := parts[2]
+
+	b.Lock()
+	book, ok := b.library[id]
+	b.Unlock()
+
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	jsonBytes, err := json.Marshal(book)
+
+	if err != nil {
+		w.Header().Add("content-type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
 	w.Header().Add("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -73,6 +105,7 @@ func (b *bookHandlers) post(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("content-type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
+		return
 	}
 	newBook.Id = uuid.NewString()
 	b.library[newBook.Id] = newBook
